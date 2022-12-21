@@ -16,18 +16,18 @@ taskWrapper.className = "taskWrapper";
 let userinput = document.createElement("input");
 userinput.className = "userinput";
 userinput.setAttribute("type", "text");
-userinput.placeholder = "Type Task Here ";
+userinput.placeholder = "Skriv här ";
 
 let taskContainer = document.createElement("div");
 taskContainer.className = "taskContainer";
 
 let addTask = document.createElement("button");
 addTask.className = "addTask";
-addTask.innerHTML = "Add Tasks";
+addTask.innerHTML = "Lägg till";
 
 let clearAll = document.createElement("button");
 clearAll.className = "clearAll";
-clearAll.innerHTML = "Clear Tasks";
+clearAll.innerHTML = "Rensa";
 
 let todosContainer = document.createElement("div");
 todosContainer.id = "main";
@@ -41,7 +41,7 @@ taskWrapper.appendChild(todosContainer);
 
 addTask.addEventListener("click", function () {
   if (userinput.value === "") {
-    alert("Please Add Task Name!");
+    alert("Var god skriv något!");
   } else {
     task.push(new Todos(userinput.value, false));
     createHtml();
@@ -49,11 +49,7 @@ addTask.addEventListener("click", function () {
   }
 });
 
-let task = [
-  new Todos("Eat", false),
-  new Todos("Code", false),
-  new Todos("Sleep", false),
-];
+let task = [new Todos("test", false)];
 
 //let task = ["Eat", "Code", "Sleep"];
 
@@ -81,7 +77,7 @@ function createHtml() {
     list.appendChild(taskDone);
     list.appendChild(deleteTask);
 
-    taskDone.innerHTML = "Done";
+    taskDone.innerHTML = "Klart";
     deleteTask.innerHTML = "X";
 
     listItem.innerHTML = task[i].task;
