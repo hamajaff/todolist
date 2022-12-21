@@ -49,13 +49,6 @@ addTask.addEventListener("click", function () {
   }
 });
 
-/* class Todos {
-  constructor(task, done) {
-    this.task = task;
-    this.done = done;
-  }
-} */
-
 let task = [
   new Todos("Eat", false),
   new Todos("Code", false),
