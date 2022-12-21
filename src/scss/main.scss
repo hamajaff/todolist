@@ -1,0 +1,105 @@
+body {
+  font-size: 25px;
+  font-family: "Times New Roman", Times, arial, serif;
+  color: black;
+  background-color: lightgrey;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div {
+  background-color: grey;
+  padding: 20px;
+}
+
+.title {
+  width: 400px;
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+}
+button {
+  background-color: blue;
+  border: blanchedalmond solid 2px;
+  color: lightgray;
+  border-radius: 7px;
+}
+
+.addTask {
+  margin: 8px;
+  padding: 5px;
+}
+
+.clearAll {
+  margin: 8px;
+  padding: 5px;
+}
+
+.deleteTask {
+  margin-right: 7px;
+  border-radius: 25%;
+}
+
+.taskWrapper,
+.taskcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 400px;
+}
+
+.taskWrapper {
+  margin-bottom: 15px;
+}
+
+input {
+  border: blanchedalmond solid 2px;
+  border-radius: 25px;
+  background-color: lightgrey;
+  margin: 6px;
+}
+
+.userinput {
+  padding: 10px;
+}
+
+input::placeholder {
+  color: black;
+  background-color: lightgray;
+  font-weight: bold;
+}
+*:focus {
+  outline: none;
+}
+
+ul {
+  border: blanchedalmond solid 2px;
+  border-radius: 25px;
+  padding: 3px;
+  margin: 5px;
+  background-color: red;
+  list-style: none;
+}
+
+li:before {
+  //content: "when done";
+  content: "bra jobbat!";
+  font-size: 15px;
+  padding-bottom: 3px;
+}
+.list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  word-break: break-all;
+  flex: 1;
+}
