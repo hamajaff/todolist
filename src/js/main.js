@@ -1,118 +1,121 @@
 import { Todos } from "./models/todo";
 
-let titleWrapper = document.createElement("div");
-
+const titleWrapper = document.createElement("div");
 titleWrapper.className = "title";
 document.body.appendChild(titleWrapper);
 
-let title = document.createElement("h3");
+const title = document.createElement("h3");
 title.className = "title";
-title.innerHTML = "To Do List";
+title.textContent = "To Do List";
 titleWrapper.appendChild(title);
 
-let taskWrapper = document.createElement("div");
+const taskWrapper = document.createElement("div");
 taskWrapper.className = "taskWrapper";
-
-let userinput = document.createElement("input");
-userinput.className = "userinput";
-userinput.setAttribute("type", "text");
-userinput.placeholder = "Skriv här ";
-
-let taskContainer = document.createElement("div");
-taskContainer.className = "taskContainer";
-
-let addTask = document.createElement("button");
-addTask.className = "addTask";
-addTask.innerHTML = "Lägg till";
-
-let clearAll = document.createElement("button");
-clearAll.className = "clearAll";
-clearAll.innerHTML = "Rensa";
-
-let todosContainer = document.createElement("div");
-todosContainer.id = "main";
-
 document.body.appendChild(taskWrapper);
+
+const userinput = document.createElement("input");
+userinput.className = "userinput";
+userinput.type = "text";
+userinput.placeholder = "Skriv här";
 taskWrapper.appendChild(userinput);
-taskContainer.appendChild(addTask);
-taskContainer.appendChild(clearAll);
+
+const taskContainer = document.createElement("div");
+taskContainer.className = "taskContainer";
 taskWrapper.appendChild(taskContainer);
+
+const addTask = document.createElement("button");
+addTask.className = "addTask";
+addTask.textContent = "Lägg till";
+taskContainer.appendChild(addTask);
+
+const clearAll = document.createElement("button");
+clearAll.className = "clearAll";
+clearAll.textContent = "Rensa";
+taskContainer.appendChild(clearAll);
+
+const todosContainer = document.createElement("div");
+todosContainer.id = "main";
 taskWrapper.appendChild(todosContainer);
 
-addTask.addEventListener("click", function () {
-  if (userinput.value === "") {
+let task = [new Todos("test", false)];
+
+function createTaskElement(todo) {
+  const listItem = document.createElement("li");
+  listItem.className = "list";
+  listItem.textContent = todo.task;
+
+  const deleteTask = document.createElement("button");
+  deleteTask.className = "deleteTask";
+  deleteTask.textContent = "X";
+
+  const taskDone = document.createElement("button");
+  taskDone.className = "taskFinished";
+  taskDone.textContent = "Klart";
+
+  taskDone.addEventListener("click", () => {
+    if (!todo.done) {
+      listItem.style.textDecoration = "line-through";
+      todo.done = true;
+      console.log(task);
+    }
+  });
+
+  taskDone.addEventListener("dblclick", () => {
+    if (todo.done) {
+      listItem.style.textDecoration = "none";
+      todo.done = false;
+      console.log(task);
+    }
+  });
+
+  deleteTask.addEventListener("click", () => {
+    task = task.filter((t) => t !== todo);
+    createHtml();
+    console.log(task);
+  });
+
+  const list = document.createElement("ul");
+  list.className = "list";
+  list.appendChild(listItem);
+  list.appendChild(taskDone);
+  list.appendChild(deleteTask);
+
+  const container = document.createElement("div");
+  container.className = "container";
+  container.appendChild(list);
+
+  return container;
+}
+
+function createHtml() {
+  const main = document.getElementById("main");
+  main.innerHTML = "";
+
+  if (task.length === 0) {
+    const noTaskMessage = document.createElement("p");
+    noTaskMessage.textContent = "Inga uppgifter.";
+    main.appendChild(noTaskMessage);
+  } else {
+    task.forEach((todo) => {
+      const taskElement = createTaskElement(todo);
+      main.appendChild(taskElement);
+    });
+  }
+}
+
+addTask.addEventListener("click", () => {
+  if (userinput.value.trim() === "") {
     alert("Var god skriv något!");
   } else {
-    task.push(new Todos(userinput.value, false));
+    task.push(new Todos(userinput.value.trim(), false));
     createHtml();
     userinput.value = "";
   }
 });
 
-let task = [new Todos("test", false)];
-
-//let task = ["Eat", "Code", "Sleep"];
-
-function createHtml() {
-  let main = document.getElementById("main");
-  main.innerHTML = "";
-
-  for (let i = 0; i < task.length; i++) {
-    let container = document.createElement("div");
-    let list = document.createElement("ul");
-    let listItem = document.createElement("li");
-    let deleteTask = document.createElement("button");
-    let taskDone = document.createElement("button");
-
-    container.className = "container";
-    list.className = "list";
-    listItem.className = "list";
-    taskDone.className = "taskFinished";
-    deleteTask.className = "deleteTask";
-
-    main.appendChild(container);
-
-    container.appendChild(list);
-    list.appendChild(listItem);
-    list.appendChild(taskDone);
-    list.appendChild(deleteTask);
-
-    taskDone.innerHTML = "Klart";
-    deleteTask.innerHTML = "X";
-
-    listItem.innerHTML = task[i].task;
-
-    taskDone.addEventListener("click", () => {
-      if (task[i].done === false) {
-        listItem.style.textDecoration = "line-through";
-        task[i].done = true;
-        console.log(task);
-      }
-    });
-
-    taskDone.addEventListener("dblclick", () => {
-      if (task[i].done === true) {
-        listItem.style.textDecoration = "none";
-        task[i].done = false;
-      }
-      console.log(task);
-    });
-
-    deleteTask.addEventListener("click", () => {
-      const newTasks = task?.filter((clickToDelete) => {
-        return clickToDelete !== task[i];
-      });
-      task = newTasks;
-
-      createHtml();
-      console.log(newTasks);
-    });
-
-    clearAll.addEventListener("click", function () {
-      task = [];
-      createHtml();
-    });
-  }
-}
+clearAll.addEventListener("click", () => {
+  task = [];
+  createHtml();
+});
 
 createHtml();
